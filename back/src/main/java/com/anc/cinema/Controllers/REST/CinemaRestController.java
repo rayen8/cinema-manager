@@ -32,7 +32,7 @@ import java.util.List;
 @Transactional
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CinemaRestController {
-    final static String UPLOADED_FOLDER = System.getProperty("user.home") + "/Pictures/CinemaApp/images/";
+    final static String UPLOADED_FOLDER = "images/";
 
     @Autowired
     FilmRepository filmRepository;
@@ -67,8 +67,7 @@ public class CinemaRestController {
             return Files.readAllBytes(path);
         } catch (IOException e) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Didn't found an image with that name!"
-            );
+                    HttpStatus.NOT_FOUND, "Didn't found an image with that name!");
         }
     }
 
@@ -76,15 +75,15 @@ public class CinemaRestController {
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
         if (uploadfile.isEmpty()) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "please select a file!"
-            );
+                    HttpStatus.NOT_FOUND, "please select a file!");
         }
         try {
             String slug = (new Date().getTime() / 1000) + uploadfile.getOriginalFilename();
             slug = slug.replace(" ", "_");
             byte[] bytes = uploadfile.getBytes();
             File dir = new File(UPLOADED_FOLDER);
-            if (!dir.exists()) dir.mkdirs();
+            if (!dir.exists())
+                dir.mkdirs();
             Path path = Paths.get(UPLOADED_FOLDER + slug);
             Files.write(path, bytes);
             return new ResponseEntity(slug, new HttpHeaders(), HttpStatus.OK);
@@ -92,11 +91,9 @@ public class CinemaRestController {
         } catch (IOException e) {
             System.out.println(e);
             throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "Problems saving the image"
-            );
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Problems saving the image");
         }
     }
-
 
     @PostMapping(path = "/buyTickets")
     public List<Ticket> buyTickets(@RequestBody TicketsForm ticketsForm) {
@@ -115,21 +112,20 @@ public class CinemaRestController {
 
     @PostMapping(path = "/addFilm")
     public ResponseEntity<Film> addFilm(@RequestPart("filmData") Film filmData,
-                                        @RequestPart("file") MultipartFile file) {
+            @RequestPart("file") MultipartFile file) {
         String path = this.uploadFile(file).getBody().toString();
         filmData.setPhoto(path);
         Film film = filmRepository.save(filmData);
         if (film != null) {
             return new ResponseEntity(film, HttpStatus.OK);
-        } else throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR, "Problems saving the film"
-        );
+        } else
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Problems saving the film");
     }
-
 
     @PostMapping(path = "/modifyMovie")
     public ResponseEntity<Film> modifyFilm(@RequestPart("filmData") Film filmData,
-                                           @RequestPart(value = "file", required = false) MultipartFile file) {
+            @RequestPart(value = "file", required = false) MultipartFile file) {
 
         if (!filmRepository.findById(filmData.getId()).isPresent()) {
             throw new ResponseStatusException(
@@ -147,8 +143,7 @@ public class CinemaRestController {
         Ville ville = villeRepository.findById(cinemaForm.getCity()).orElse(null);
         if (ville == null) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Didn't found this city"
-            );
+                    HttpStatus.NOT_FOUND, "Didn't found this city");
         }
         Cinema cinema = new Cinema(null, cinemaForm.getName(),
                 cinemaForm.getLongitude(), cinemaForm.getLatitude(),
@@ -162,13 +157,13 @@ public class CinemaRestController {
     }
 
     @PostMapping(path = "/updateProjections")
-    public ResponseEntity<Boolean> updateProjections(@RequestBody ProjectionsForm projectionsForm) throws ParseException {
+    public ResponseEntity<Boolean> updateProjections(@RequestBody ProjectionsForm projectionsForm)
+            throws ParseException {
         Film film = filmRepository.findById(projectionsForm.getMovieID()).orElse(null);
         Salle salle = salleRepository.findById(projectionsForm.getRoomID()).orElse(null);
         if (film == null || salle == null) {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Didn't found this " + (film == null ? "Film" : "Room")
-            );
+                    HttpStatus.NOT_FOUND, "Didn't found this " + (film == null ? "Film" : "Room"));
         }
         projectionRepository.deleteAll(salleRepository.getOne(salle.getId()).getProjections());
 
@@ -184,7 +179,8 @@ public class CinemaRestController {
             projection.setPrix(projectionItem.getPrice());
             projection.setSalle(salle);
             projection.setSeance(seance);
-            projection = projectionRepository.save(projection);cinemaService.initTicket(projection);
+            projection = projectionRepository.save(projection);
+            cinemaService.initTicket(projection);
         }
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
