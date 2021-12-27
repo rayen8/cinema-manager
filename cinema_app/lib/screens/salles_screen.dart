@@ -188,7 +188,7 @@ class _SallesScreenState extends State<SallesScreen> {
                                           ['listTickets']
                                       .map(
                                     (ticket) {
-                                      if (ticket['reservee'] == false) {
+                                      if (ticket['reserve'] == false) {
                                         return Container(
                                           width: 50,
                                           padding: const EdgeInsets.all(2),
@@ -257,10 +257,10 @@ class _SallesScreenState extends State<SallesScreen> {
   }
 
   void loadTickets(projection, salle) {
-    //String url="http://localhost:8080/projections/1/tickets?projection=ticketProj";
+    //String url="http://localhost:8080/projections/1/tickets?projection=TicketProjection";
     String url = projection['_links']['tickets']['href']
         .toString()
-        .replaceAll("{?projection}", "?projection=ticketProj");
+        .replaceAll("{?projection}", "?projection=TicketProjection");
     log("Loading tickets for projection: " + url);
     http.get(Uri.parse(url)).then((resp) {
       setState(() {
@@ -270,6 +270,7 @@ class _SallesScreenState extends State<SallesScreen> {
         projection['nombrePlacesDisponibles'] =
             nombrePlaceDisponibles(projection);
       });
+      log(salle['currentProjection']['listTickets'].toString());
     }).catchError((err) {
       log(err);
     });
