@@ -27,7 +27,8 @@ public class CinemaApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         repositoryRestConfiguration.exposeIdsFor(Ville.class, Cinema.class,
                 Film.class, Ticket.class, Salle.class);
-        // Should only be executed on first run, or if "spring.jpa.hibernate.ddl-auto = create"
+        // Should only be executed on first run, or if "spring.jpa.hibernate.ddl-auto =
+        // create"
         cinemaService.initVilles();
         cinemaService.initCinemas();
         cinemaService.initSalles();

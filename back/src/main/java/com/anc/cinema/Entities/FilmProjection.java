@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Projection(name = "FilmProjection", types = com.anc.cinema.Entities.Projection.class)
-public interface ProjectionProj {
+public interface FilmProjection {
     public Long getId();
 
     public double getPrix();
