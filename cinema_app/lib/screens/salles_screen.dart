@@ -5,16 +5,16 @@ import 'package:http/http.dart' as http;
 import 'package:cinema_app/utils/constants.dart';
 import 'dart:convert';
 
-class RoomScreen extends StatefulWidget {
+class SallesScreen extends StatefulWidget {
   final dynamic cinema;
 
-  const RoomScreen({Key? key, required this.cinema}) : super(key: key);
+  const SallesScreen({Key? key, required this.cinema}) : super(key: key);
 
   @override
-  _RoomScreenState createState() => _RoomScreenState();
+  _SallesScreenState createState() => _SallesScreenState();
 }
 
-class _RoomScreenState extends State<RoomScreen> {
+class _SallesScreenState extends State<SallesScreen> {
   List<dynamic>? listSalles;
 
   @override
@@ -71,6 +71,12 @@ class _RoomScreenState extends State<RoomScreen> {
                                   GlobalData.baseUrl +
                                       "/imageFilm/${listSalles![index]['currentProjection']['film']['id']}",
                                   width: 150,
+                                  errorBuilder: (context, object, stack) {
+                                    return Image.asset(
+                                      "./assets/no-image.png",
+                                      width: 150,
+                                    );
+                                  },
                                 ),
                                 Column(
                                   children: [
@@ -88,7 +94,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 : Colors.blueGrey,
                                           ),
                                           child: Text(
-                                            "${projection['seance']['heureDebut']}(${projection['film']['duree']},Prix=${projection['prix']})",
+                                            "${projection['seance']['heureDebut']}(${projection['film']['dure']},Prix=${projection['prix']})",
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,
@@ -128,12 +134,19 @@ class _RoomScreenState extends State<RoomScreen> {
                               Container(
                                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                                 child: const TextField(
-                                  decoration:
-                                      InputDecoration(hintText: 'Your name'),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    hintText: 'Your name',
+                                  ),
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
+                                padding: const EdgeInsets.fromLTRB(
+                                  6,
+                                  2,
+                                  6,
+                                  2,
+                                ),
                                 child: const TextField(
                                   decoration: InputDecoration(
                                     hintText: 'Code payemant',
@@ -141,27 +154,34 @@ class _RoomScreenState extends State<RoomScreen> {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
+                                padding: const EdgeInsets.fromLTRB(
+                                  6,
+                                  2,
+                                  6,
+                                  2,
+                                ),
                                 child: const TextField(
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     hintText: 'Nombre de Tickets',
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.redAccent,
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.redAccent,
+                                  ),
+                                  child: const Text(
+                                    "Réserver les places",
+                                    style: TextStyle(
+                                      color: Colors.white,
                                     ),
-                                    child: const Text(
-                                      "Réserver les places",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                  )),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
                               Wrap(
                                 children: [
                                   ...listSalles![index]['currentProjection']
@@ -216,6 +236,7 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   void loadProjections(salle) {
+    log("Selected salle id: " + salle['id'].toString());
     //String url1=GlobalData.host+"/salles/${salle['id']}/projections?projection=FilmProjection";
     String url2 = salle['_links']['projections']['href']
         .toString()
@@ -240,6 +261,7 @@ class _RoomScreenState extends State<RoomScreen> {
     String url = projection['_links']['tickets']['href']
         .toString()
         .replaceAll("{?projection}", "?projection=ticketProj");
+    log("Loading tickets for projection: " + url);
     http.get(Uri.parse(url)).then((resp) {
       setState(() {
         projection['listTickets'] =
@@ -256,7 +278,7 @@ class _RoomScreenState extends State<RoomScreen> {
   nombrePlaceDisponibles(projection) {
     int nombre = 0;
     for (int i = 0; i < projection['tickets'].length; i++) {
-      if (projection['tickets'][i]['reservee'] == false) ++nombre;
+      if (projection['tickets'][i]['reserve'] == false) ++nombre;
     }
     return nombre;
   }

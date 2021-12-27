@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:cinema_app/screens/places_screen.dart';
+import 'package:cinema_app/screens/salles_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,7 +50,7 @@ class _CinemaScreenState extends State<CinemaScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PlacesScreen(
+                              builder: (context) => SallesScreen(
                                 cinema: listCinemas![index],
                               ),
                             ),
