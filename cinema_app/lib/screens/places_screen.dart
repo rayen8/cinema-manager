@@ -49,10 +49,14 @@ class _PlacesScreenState extends State<PlacesScreen> {
                               ),
                               child: Text(
                                 listSalles![index]['name'],
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                               onPressed: () {
-                                loadProjections(listSalles![index]);
+                                loadProjections(
+                                  listSalles![index],
+                                );
                               },
                             ),
                           ),
@@ -67,6 +71,12 @@ class _PlacesScreenState extends State<PlacesScreen> {
                                   GlobalData.baseUrl +
                                       "/imageFilm/${listSalles![index]['currentProjection']['film']['id']}",
                                   width: 150,
+                                  errorBuilder: (context, object, stack) {
+                                    return Image.asset(
+                                      "./assets/no-image.png",
+                                      width: 150,
+                                    );
+                                  },
                                 ),
                                 Column(
                                   children: [
@@ -76,17 +86,19 @@ class _PlacesScreenState extends State<PlacesScreen> {
                                       (projection) {
                                         return ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                              primary: (listSalles![index][
-                                                              'currentProjection']
-                                                          ['id'] ==
-                                                      projection['id'])
-                                                  ? Colors.deepPurple
-                                                  : Colors.blueGrey),
+                                            primary: (listSalles![index][
+                                                            'currentProjection']
+                                                        ['id'] ==
+                                                    projection['id'])
+                                                ? Colors.deepPurple
+                                                : Colors.blueGrey,
+                                          ),
                                           child: Text(
-                                            "${projection['seance']['heureDebut']}(${projection['film']['duree']},Prix=${projection['prix']})",
+                                            "${projection['seance']['heureDebut']}(${projection['film']['dure']},Prix=${projection['prix']})",
                                             style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12),
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                           onPressed: () {
                                             loadTickets(
@@ -115,41 +127,50 @@ class _PlacesScreenState extends State<PlacesScreen> {
                               Row(
                                 children: [
                                   Text(
-                                      "Nombre de places disponible:${listSalles![index]['currentProjection']['nombrePlacesDisponibles']}")
+                                    "Nombre de places disponible:${listSalles![index]['currentProjection']['nombrePlacesDisponibles']}",
+                                  )
                                 ],
                               ),
                               Container(
                                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                                 child: const TextField(
-                                  decoration:
-                                      InputDecoration(hintText: 'Your name'),
+                                  decoration: InputDecoration(
+                                    hintText: 'Your name',
+                                  ),
                                 ),
                               ),
                               Container(
                                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                                 child: const TextField(
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                      hintText: 'Code payemant'),
+                                    hintText: 'Code paiement',
+                                  ),
                                 ),
                               ),
                               Container(
                                 padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
                                 child: const TextField(
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                      hintText: 'Nombre de Tickets'),
+                                    hintText: 'Nombre de Tickets',
+                                  ),
                                 ),
                               ),
                               SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.redAccent),
-                                    child: const Text(
-                                      "Réserver les places",
-                                      style: TextStyle(color: Colors.white),
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.redAccent),
+                                  child: const Text(
+                                    "Réserver les places",
+                                    style: TextStyle(
+                                      color: Colors.white,
                                     ),
-                                    onPressed: () {},
-                                  )),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
                               Wrap(
                                 children: [
                                   ...listSalles![index]['currentProjection']
@@ -162,12 +183,14 @@ class _PlacesScreenState extends State<PlacesScreen> {
                                           padding: const EdgeInsets.all(2),
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                                primary: Colors.blueAccent),
+                                              primary: Colors.blueAccent,
+                                            ),
                                             child: Text(
                                               "${ticket['place']['numero']}",
                                               style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12),
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                              ),
                                             ),
                                             onPressed: () {},
                                           ),
@@ -202,10 +225,11 @@ class _PlacesScreenState extends State<PlacesScreen> {
   }
 
   void loadProjections(salle) {
-    //String url1=GlobalData.host+"/salles/${salle['id']}/projections?projection=p1";
+    log("Selected salle id: " + salle['id'].toString());
+    //String url1=GlobalData.host+"/salles/${salle['id']}/projections?projection=FilmProjection";
     String url2 = salle['_links']['projections']['href']
         .toString()
-        .replaceAll("{?projection}", "?projection=p1");
+        .replaceAll("{?projection}", "?projection=FilmProjection");
     //print(url1);
     http.get(Uri.parse(url2)).then((resp) {
       setState(() {
@@ -224,7 +248,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
     //String url="http://localhost:8080/projections/1/tickets?projection=ticketProj";
     String url = projection['_links']['tickets']['href']
         .toString()
-        .replaceAll("{?projection}", "?projection=p2");
+        .replaceAll("{?projection}", "?projection=ticketProj");
     http.get(Uri.parse(url)).then((resp) {
       setState(() {
         projection['listTickets'] =
