@@ -5,16 +5,16 @@ import 'package:http/http.dart' as http;
 import 'package:cinema_app/utils/constants.dart';
 import 'dart:convert';
 
-class SallesScreen extends StatefulWidget {
+class SallesPage extends StatefulWidget {
   final dynamic cinema;
 
-  const SallesScreen({Key? key, required this.cinema}) : super(key: key);
+  const SallesPage({Key? key, required this.cinema}) : super(key: key);
 
   @override
-  _SallesScreenState createState() => _SallesScreenState();
+  _SallesPageState createState() => _SallesPageState();
 }
 
-class _SallesScreenState extends State<SallesScreen> {
+class _SallesPageState extends State<SallesPage> {
   List<dynamic>? listSalles;
 
   @override

@@ -1,5 +1,5 @@
-import 'package:cinema_app/screens/settings_screen.dart';
-import 'package:cinema_app/screens/villes_screen.dart';
+import 'package:cinema_app/pages/settings_page.dart';
+import 'package:cinema_app/pages/villes_page.dart';
 import 'package:cinema_app/widgets/menu_item.dart';
 import 'package:flutter/material.dart';
 
@@ -10,17 +10,17 @@ class MainDrawer extends StatelessWidget {
     {
       'title': 'Home',
       'icon': const Icon(Icons.home),
-      'page': const VillesScreen(),
+      'page': const VillesPage(),
     },
     {
       'title': 'Settings',
       'icon': const Icon(Icons.settings),
-      'page': const SettingsScreen(),
+      'page': const SettingsPage(),
     },
     {
       'title': 'Contact',
       'icon': const Icon(Icons.contact_mail),
-      'page': const SettingsScreen(),
+      'page': const SettingsPage(),
     }
   ];
 

@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:cinema_app/screens/salles_screen.dart';
+import 'package:cinema_app/pages/salles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class CinemaScreen extends StatefulWidget {
+class CinemaPage extends StatefulWidget {
   final dynamic ville;
-  const CinemaScreen({Key? key, required this.ville}) : super(key: key);
+  const CinemaPage({Key? key, required this.ville}) : super(key: key);
 
   @override
-  _CinemaScreenState createState() => _CinemaScreenState();
+  _CinemaPageState createState() => _CinemaPageState();
 }
 
-class _CinemaScreenState extends State<CinemaScreen> {
+class _CinemaPageState extends State<CinemaPage> {
   List<dynamic>? listCinemas;
 
   @override
@@ -50,7 +50,7 @@ class _CinemaScreenState extends State<CinemaScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SallesScreen(
+                              builder: (context) => SallesPage(
                                 cinema: listCinemas![index],
                               ),
                             ),
