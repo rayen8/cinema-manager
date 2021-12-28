@@ -5,10 +5,12 @@ import 'package:cinema_app/utils/constants.dart';
 import 'package:http/http.dart';
 
 class HttpAuthService {
+  final String endpoint = GlobalData.authUrl;
+
   Future<User> registerWithEmailAndPassword(
       String email, String password) async {
     final response = await post(
-      Uri.parse("${GlobalData.baseUrl}/register"),
+      Uri.parse("$endpoint/register"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(
         {'email': email, 'password': password},
@@ -26,7 +28,7 @@ class HttpAuthService {
 
   Future<User> signInWithEmailAndPassword(String email, String password) async {
     final response = await post(
-      Uri.parse("${GlobalData.baseUrl}/login"),
+      Uri.parse("$endpoint/login"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(
         {'email': email, 'password': password},

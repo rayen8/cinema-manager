@@ -65,7 +65,7 @@ class _CityScreenState extends State<VillesPage> {
 
   void loadVilles() async {
     //String url= await "http://192.168.42.152:8080/villes";
-    String url = GlobalData.baseUrl + "/villes";
+    String url = GlobalData.apiUrl + "/villes";
     http.get(Uri.parse(url)).then((resp) {
       setState(() {
         listVilles = json.decode(resp.body)['_embedded']['villes'];

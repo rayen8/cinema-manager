@@ -68,7 +68,7 @@ class _SallesPageState extends State<SallesPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Image.network(
-                                  GlobalData.baseUrl +
+                                  GlobalData.apiUrl +
                                       "/imageFilm/${listSalles![index]['currentProjection']['film']['id']}",
                                   width: 150,
                                   errorBuilder: (context, object, stack) {

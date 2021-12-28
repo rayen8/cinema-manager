@@ -5,7 +5,7 @@ import 'package:cinema_app/utils/constants.dart';
 import 'package:http/http.dart';
 
 class HttpFilmService {
-  final String endpoint = "${GlobalData.baseUrl}/films";
+  final String endpoint = "${GlobalData.apiUrl}/films";
 
   Future<List<Film>> getAll() async {
     final response = await get(Uri.parse(endpoint));
