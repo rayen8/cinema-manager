@@ -32,8 +32,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         response.addHeader("Access-Control-Expose-Headers",
                 "Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Credentials ");
 
-        System.out.println("Got here!!");
-
         // -- Allow preflight requests
         if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);

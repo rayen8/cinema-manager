@@ -37,7 +37,7 @@ public class CinemaServiceImpl implements ICinemaService {
     @Autowired
     TicketRepository ticketRepository;
 
-    double[] prices = new double[]{30, 50, 60, 70, 90, 100};
+    double[] prices = new double[] { 30, 50, 60, 70, 90, 100 };
 
     @Override
     public void initVilles() {
@@ -106,17 +106,27 @@ public class CinemaServiceImpl implements ICinemaService {
 
     @Override
     public void initFilms() {
-        String[] titles = {"12 Angry Men", "Interstellar", "Saving Private Ryan", "Joker", "The Intouchables"};
-        String[] categories = {"Drama", "Fiction", "Drama", "Crime", "Comedy"};
-        String[] descriptions = {"A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider the evidence.", "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.", "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.", "In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.", "After he becomes a quadriplegic from a paragliding accident, an aristocrat hires a young man from the projects to be his caregiver."};
-        String[] photos = {"https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SY1000_CR0,0,649,1000_AL_.jpg", "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_SX675_AL_.jpg", "https://m.media-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SY1000_CR0,0,679,1000_AL_.jpg", "https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,674,1000_AL_.jpg", "https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SY1000_CR0,0,674,1000_AL_.jpg"};
-        int[] durations = {96, 169, 169, 122, 112};
-        double[] ratings = {8.9, 8.6, 8.6, 8.5, 8.5};
+        String[] titles = { "12 Angry Men", "Interstellar", "Saving Private Ryan", "Joker", "The Intouchables" };
+        String[] categories = { "Drama", "Fiction", "Drama", "Crime", "Comedy" };
+        String[] descriptions = {
+                "A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider the evidence.",
+                "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+                "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.",
+                "In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.",
+                "After he becomes a quadriplegic from a paragliding accident, an aristocrat hires a young man from the projects to be his caregiver." };
+        // String[] photos =
+        // {"https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SY1000_CR0,0,649,1000_AL_.jpg",
+        // "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_SX675_AL_.jpg",
+        // "https://m.media-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SY1000_CR0,0,679,1000_AL_.jpg",
+        // "https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,674,1000_AL_.jpg",
+        // "https://m.media-amazon.com/images/M/MV5BMTYxNDA3MDQwNl5BMl5BanBnXkFtZTcwNTU4Mzc1Nw@@._V1_SY1000_CR0,0,674,1000_AL_.jpg"};
+        int[] durations = { 96, 169, 169, 122, 112 };
+        double[] ratings = { 8.9, 8.6, 8.6, 8.5, 8.5 };
         for (int i = 0; i < titles.length; i++) {
             Film film = new Film();
             film.setTitre(titles[i]);
             film.setDescription(descriptions[i]);
-//            film.setPhoto(photos[i]);
+            // film.setPhoto(photos[i]);
             film.setPhoto(titles[i] + ".jpg");
             film.setDure(durations[i]);
             film.setRating(ratings[i]);
@@ -179,11 +189,10 @@ public class CinemaServiceImpl implements ICinemaService {
             });
         }
 
-
     }
 
     private List<Projection> initProjection(Salle salle, List<Film> films) {
-        List<Projection> projections = new ArrayList();
+        List<Projection> projections = new ArrayList<Projection>();
         int randFilm = new Random().nextInt(films.size());
         seanceRepository.findAll().forEach(seance -> {
             Projection projection = new Projection();

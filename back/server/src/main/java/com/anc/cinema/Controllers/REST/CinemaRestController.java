@@ -86,7 +86,7 @@ public class CinemaRestController {
                 dir.mkdirs();
             Path path = Paths.get(UPLOADED_FOLDER + slug);
             Files.write(path, bytes);
-            return new ResponseEntity(slug, new HttpHeaders(), HttpStatus.OK);
+            return new ResponseEntity<String>(slug, new HttpHeaders(), HttpStatus.OK); // TESTME: Templated type
 
         } catch (IOException e) {
             System.out.println(e);
@@ -117,7 +117,7 @@ public class CinemaRestController {
         filmData.setPhoto(path);
         Film film = filmRepository.save(filmData);
         if (film != null) {
-            return new ResponseEntity(film, HttpStatus.OK);
+            return new ResponseEntity<Film>(film, HttpStatus.OK); // TESTME: Templated type
         } else
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR, "Problems saving the film");
