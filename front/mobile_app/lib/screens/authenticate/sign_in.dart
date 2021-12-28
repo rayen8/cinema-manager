@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cinema_app/models/user.dart';
 import 'package:cinema_app/providers/user_provider.dart';
-import 'package:cinema_app/services/http_auth_service.dart';
+import 'package:cinema_app/services/auth/http_auth_service.dart';
 import 'package:cinema_app/shared/constants.dart';
 import 'package:cinema_app/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -111,8 +111,8 @@ class _SignInState extends State<SignIn> {
                         validator: (String? value) {
                           if (value == null) return "";
 
-                          if (value.isEmpty || !value.contains("@")) {
-                            return "Please enter a valid email";
+                          if (value.isEmpty) {
+                            return "Please enter your email";
                           }
                           return null;
                         },
@@ -127,8 +127,8 @@ class _SignInState extends State<SignIn> {
                         validator: (String? value) {
                           if (value == null) return "";
 
-                          if (value.isEmpty || value.length < 3) {
-                            return "Password should have 3 characters minimum";
+                          if (value.isEmpty) {
+                            return "Please enter your password";
                           }
                           return null;
                         },

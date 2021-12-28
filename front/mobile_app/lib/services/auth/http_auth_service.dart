@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cinema_app/models/user.dart';
+import 'package:cinema_app/services/auth/auth_strategy_service.dart';
 import 'package:cinema_app/utils/constants.dart';
 import 'package:http/http.dart';
 
@@ -13,7 +14,7 @@ class HttpAuthService {
       Uri.parse("$endpoint/register"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(
-        {'email': email, 'password': password},
+        {'username': email, 'password': password},
       ),
     );
 
@@ -31,16 +32,16 @@ class HttpAuthService {
       Uri.parse("$endpoint/login"),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(
-        {'email': email, 'password': password},
+        {'username': email, 'password': password},
       ),
     );
 
     if (response.statusCode == 200) {
-      return User.fromMap(
-        jsonDecode(response.body),
+      return AuthStrategyService.doLoginAndGetUser(
+        response.headers["authorization"].toString(),
       );
     } else {
-      throw Exception('Failed to register.');
+      throw Exception('Failed to sign in.');
     }
   }
 }
