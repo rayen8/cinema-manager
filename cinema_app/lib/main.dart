@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Cinema App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: MainScreen(),
+      home: const MainScreen(),
     );
   }
 }

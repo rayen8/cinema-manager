@@ -236,7 +236,6 @@ class _SallesScreenState extends State<SallesScreen> {
   }
 
   void loadProjections(salle) {
-    log("Selected salle id: " + salle['id'].toString());
     //String url1=GlobalData.host+"/salles/${salle['id']}/projections?projection=FilmProjection";
     String url2 = salle['_links']['projections']['href']
         .toString()
@@ -261,7 +260,6 @@ class _SallesScreenState extends State<SallesScreen> {
     String url = projection['_links']['tickets']['href']
         .toString()
         .replaceAll("{?projection}", "?projection=TicketProjection");
-    log("Loading tickets for projection: " + url);
     http.get(Uri.parse(url)).then((resp) {
       setState(() {
         projection['listTickets'] =
@@ -270,7 +268,6 @@ class _SallesScreenState extends State<SallesScreen> {
         projection['nombrePlacesDisponibles'] =
             nombrePlaceDisponibles(projection);
       });
-      log(salle['currentProjection']['listTickets'].toString());
     }).catchError((err) {
       log(err);
     });
