@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cinema_app/models/user.dart';
 import 'package:cinema_app/providers/user_provider.dart';
-import 'package:cinema_app/services/auth/http_service.dart';
+import 'package:cinema_app/services/auth/auth_service.dart';
 import 'package:cinema_app/shared/constants.dart';
 import 'package:cinema_app/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final HttpAuthService _httpAuthService = HttpAuthService();
+  final AuthService _authService = AuthService();
 
   final _formKey = GlobalKey<FormState>();
   bool _enableAutoValidation = false;
@@ -48,7 +48,7 @@ class _RegisterState extends State<Register> {
         });
 
         try {
-          User user = await _httpAuthService.registerWithEmailAndPassword(
+          User user = await _authService.register(
             _emailController.text,
             _passwordController.text,
           );

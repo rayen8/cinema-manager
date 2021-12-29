@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cinema_app/models/user.dart';
 import 'package:cinema_app/providers/user_provider.dart';
-import 'package:cinema_app/services/auth/http_service.dart';
+import 'package:cinema_app/services/auth/auth_service.dart';
 import 'package:cinema_app/shared/constants.dart';
 import 'package:cinema_app/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final HttpAuthService _httpAuthService = HttpAuthService();
+  final AuthService _authService = AuthService();
 
   final _formKey = GlobalKey<FormState>();
   bool _enableAutoValidation = false;
@@ -47,7 +47,7 @@ class _SignInState extends State<SignIn> {
           loading = true;
         });
         try {
-          User user = await _httpAuthService.signInWithEmailAndPassword(
+          User user = await _authService.login(
             _emailController.text,
             _passwordController.text,
           );
