@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cinema_app/models/user.dart';
 import 'package:cinema_app/providers/user_provider.dart';
-import 'package:cinema_app/services/auth/http_auth_service.dart';
+import 'package:cinema_app/services/auth/http_service.dart';
 import 'package:cinema_app/shared/constants.dart';
 import 'package:cinema_app/shared/loading.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,15 @@
 import 'dart:convert';
 
 import 'package:cinema_app/models/user.dart';
-import 'package:cinema_app/services/auth/auth_strategy_service.dart';
+import 'package:cinema_app/services/auth/strategy_service.dart';
 import 'package:cinema_app/utils/constants.dart';
 import 'package:http/http.dart';
 
+/// Registers & Signs in a user by internally calling [AuthStrategyService].
+///
+/// **Note:** You still have to update the state yourself (using a stream for example).
 class HttpAuthService {
+  final AuthStrategyService _authStrategyService = AuthStrategyService();
   final String endpoint = GlobalData.authUrl;
 
   Future<User> registerWithEmailAndPassword(
@@ -37,7 +41,7 @@ class HttpAuthService {
     );
 
     if (response.statusCode == 200) {
-      return AuthStrategyService.doLoginAndGetUser(
+      return _authStrategyService.doLoginAndGetUser(
         response.headers["authorization"].toString(),
       );
     } else {
