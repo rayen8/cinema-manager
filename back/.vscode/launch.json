@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CinemaApplication<cinema>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.anc.cinema.CinemaApplication",
+            "projectName": "cinema",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-JwtGeneratorApplication<jwt-generator>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.demo.JwtGeneratorApplication",
+            "projectName": "jwt-generator",
+            "args": ""
+        }
+    ]
+}
