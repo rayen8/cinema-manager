@@ -38,6 +38,7 @@ dependencies:
   flutter_spinkit: ^5.1.0
   flutter_secure_storage: ^5.0.2
   jwt_decode: ^0.3.1
+  http_interceptor: ^1.0.2
 
 dev_dependencies:
   flutter_test:
