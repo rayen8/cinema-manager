@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:cinema_app/pages/cinema_page.dart';
 import 'package:cinema_app/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:cinema_app/services/http/intercepted_service.dart';
 
 class VillesPage extends StatefulWidget {
   const VillesPage({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class _CityScreenState extends State<VillesPage> {
   void loadVilles() async {
     //String url= await "http://192.168.42.152:8080/villes";
     String url = GlobalData.apiUrl + "/villes";
-    http.get(Uri.parse(url)).then((resp) {
+    InterceptedService.http.get(Uri.parse(url)).then((resp) {
       setState(() {
         listVilles = json.decode(resp.body)['_embedded']['villes'];
       });

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
+import 'package:cinema_app/services/http/intercepted_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:cinema_app/utils/constants.dart';
 import 'dart:convert';
 
@@ -226,7 +226,7 @@ class _SallesPageState extends State<SallesPage> {
 
   void loadSalles() {
     String url = widget.cinema['_links']['salles']['href'];
-    http.get(Uri.parse(url)).then((resp) {
+    InterceptedService.http.get(Uri.parse(url)).then((resp) {
       setState(() {
         listSalles = json.decode(resp.body)['_embedded']['salles'];
       });
@@ -242,7 +242,7 @@ class _SallesPageState extends State<SallesPage> {
         .replaceAll("{?projection}", "?projection=FilmProjection");
     //print(url1);
     log(url2);
-    http.get(Uri.parse(url2)).then((resp) {
+    InterceptedService.http.get(Uri.parse(url2)).then((resp) {
       setState(() {
         salle['projections'] =
             json.decode(resp.body)['_embedded']['projections'];
@@ -260,7 +260,7 @@ class _SallesPageState extends State<SallesPage> {
     String url = projection['_links']['tickets']['href']
         .toString()
         .replaceAll("{?projection}", "?projection=TicketProjection");
-    http.get(Uri.parse(url)).then((resp) {
+    InterceptedService.http.get(Uri.parse(url)).then((resp) {
       setState(() {
         projection['listTickets'] =
             json.decode(resp.body)['_embedded']['tickets'];

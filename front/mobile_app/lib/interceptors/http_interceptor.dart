@@ -13,6 +13,7 @@ class HttpInterceptor implements InterceptorContract {
     String? token = await _authStrategy.getToken();
     if (token == null) log("Interceptor got a null token!");
     data.headers['authorization'] = "Bearer $token";
+    log("Interceptor token: ${data.headers['authorization'].toString()}");
     return data;
   }
 

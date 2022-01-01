@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cinema_app/pages/salles_page.dart';
+import 'package:cinema_app/services/http/intercepted_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -67,7 +68,7 @@ class _CinemaPageState extends State<CinemaPage> {
 
   void loadCinemas() {
     String url = widget.ville['_links']['cinemas']['href'];
-    http.get(Uri.parse(url)).then((resp) {
+    InterceptedService.http.get(Uri.parse(url)).then((resp) {
       setState(() {
         listCinemas = json.decode(resp.body)['_embedded']['cinemas'];
       });
