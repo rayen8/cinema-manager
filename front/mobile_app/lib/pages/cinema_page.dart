@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:cinema_app/pages/salles_page.dart';
 import 'package:cinema_app/services/http/intercepted_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class CinemaPage extends StatefulWidget {
   final dynamic ville;
