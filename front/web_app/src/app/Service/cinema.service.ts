@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {UploadFile} from 'ng-zorro-antd';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { UploadFile } from 'ng-zorro-antd';
 import Movie from '../Data/Movie';
-import {FormControl} from '@angular/forms';
-import {City} from '../Data/City';
-import {Cinema} from '../Data/CinemasResponse';
-import {FilmsResponse} from '../Data/FilmsResponse';
+import { FormControl } from '@angular/forms';
+import { City } from '../Data/City';
+import { Cinema } from '../Data/CinemasResponse';
+import { FilmsResponse } from '../Data/FilmsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -55,9 +55,9 @@ export class CinemaService {
 
   onlyNumbers = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
-      return {required: true};
+      return { required: true };
     } else if (isNaN(control.value)) {
-      return {chars: true, error: true};
+      return { chars: true, error: true };
     }
     return {};
   }

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {CinemaService} from '../../Service/cinema.service';
-import {NzMessageService} from 'ng-zorro-antd';
+import { Component, OnInit } from '@angular/core';
+import { CinemaService } from '../../Service/cinema.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-cinemas',
@@ -117,7 +117,7 @@ export class CinemasComponent implements OnInit {
   getTickets() {
     this.selectedProjection.tickets = [];
     this.isLoadingTickets = true;
-    this.cinemaService.fetchTickets(this.selectedProjection._links.tickets.href).subscribe(result => {
+    this.cinemaService.fetchTickets(this.selectedProjection._links.tickets.href.replace("{?projection}", "")).subscribe(result => {
       this.isLoadingTickets = false;
       // @ts-ignore
       this.selectedProjection.tickets = result._embedded.tickets;
@@ -131,9 +131,9 @@ export class CinemasComponent implements OnInit {
       tickets: this.ticketCart
     })
       .subscribe((result: any[]) => {
-          this.message.success('Ordered successfully !');
-          this.getTickets();
-        }, this.errorFunc
+        this.message.success('Ordered successfully !');
+        this.getTickets();
+      }, this.errorFunc
       );
   }
 
@@ -145,7 +145,7 @@ export class CinemasComponent implements OnInit {
         this.citiesOptions = [];
         // @ts-ignore
         result._embedded.villes.forEach(v => {
-          this.citiesOptions.push({id: v.id, city: v.name, cinemas: v._links.cinemas});
+          this.citiesOptions.push({ id: v.id, city: v.name, cinemas: v._links.cinemas });
         });
       }, this.errorFunc, () =>
         this.isLoading = false);
