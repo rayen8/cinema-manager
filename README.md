@@ -20,12 +20,12 @@ For the frontend:
 4. Run both microservices with java.
 
 ### Starting the frontend:
-Start the mobile app
+Running the Flutter app
 ```BASH
 cd front/mobile_app && flutter pub get && flutter run
 ```
 
-Start the web app
+Start the Angular app
 ```BASH
 cd front/web_app && npm install && npm start
 ```
